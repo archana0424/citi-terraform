@@ -19,3 +19,24 @@ module "peering_vpc1_vpc2" {
   local_vpc_self_link = module.vpc1.network_self_link
   peer_vpc_self_link  = module.vpc2.network_self_link
 }
+
+module "vm_a" {
+  source         = "./modules/compute_vm"
+  name           = var.vm1_name
+  zone           = "${var.region}-a"
+  network        = module.vpc1.network_self_link
+  subnet         = module.vpc1.subnet_self_links["a"]
+  tags           = ["web"]
+  sa_email       = var.deploy_sa_email
+  startup_script = "apt-get update -y && apt-get install -y nginx"
+}
+
+module "vm_b" {
+  source         = "./modules/compute_vm"
+  name           = var.vm2_name
+  zone           = "${var.region}-b"
+  network        = module.vpc1.network_self_link
+  subnet         = module.vpc1.subnet_self_links["b"]
+  sa_email       = var.deploy_sa_email
+  startup_script = "apt-get update -y && apt-get install -y apache2"
+}
