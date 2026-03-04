@@ -1,0 +1,82 @@
+# Cloud Build pipeline for Terraform (init, validate, plan, apply)
+steps:
+# Step 1: Pre-check (GCP connection, auth, versions)
+- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  id: pre-check
+  entrypoint: bash
+  args:
+    - -c
+    - |
+      set -e
+      echo "Active project: $(gcloud config get-value project)"
+      echo "ADC accounts:"
+      gcloud auth list
+      echo "Terraform version:"
+      terraform -version || echo "Terraform not installed in this image"
+      echo "gcloud version:"
+      gcloud --version
+      echo "Impersonation target: ${TF_VAR_deploy_sa_email}"
+      gcloud auth print-access-token --impersonate-service-account="${TF_VAR_deploy_sa_email}" >/dev/null && echo "Impersonation OK" || echo "Impersonation FAILED"
+
+steps:
+# Step 2: Terraform Init + Validate
+- name: hashicorp/terraform:1.6.6
+  id: init-validate
+  entrypoint: sh
+  args:
+    - -c
+    - |
+      terraform init \
+        -backend-config="bucket=${_TF_STATE_BUCKET}" \
+        -backend-config="prefix=${_TF_STATE_PREFIX}"
+      terraform fmt -check
+      terraform validate
+
+  env:
+    - "TF_VAR_project_id=$PROJECT_ID"
+    - "TF_VAR_region=${_REGION}"
+    - "TF_VAR_deploy_sa_email=${TF_VAR_deploy_sa_email}"
+
+# Step 3: Terraform Plan
+- name: hashicorp/terraform:1.6.6
+  id: plan
+  entrypoint: sh
+  args:
+    - -c
+    - |
+      terraform plan -out=tfplan
+
+  env:
+    - "TF_VAR_project_id=$PROJECT_ID"
+    - "TF_VAR_region=${_REGION}"
+    - "TF_VAR_deploy_sa_email=${TF_VAR_deploy_sa_email}"
+
+# Step 4: Terraform Apply
+- name: hashicorp/terraform:1.6.6
+  id: apply
+  entrypoint: sh
+  args:
+    - -c
+    - |
+      terraform apply -auto-approve tfplan
+
+  env:
+    - "TF_VAR_project_id=$PROJECT_ID"
+    - "TF_VAR_region=${_REGION}"
+    - "TF_VAR_deploy_sa_email=${TF_VAR_deploy_sa_email}"
+
+# Secrets injection from Secret Manager
+availableSecrets:
+  secretManager:
+  - versionName: projects/$PROJECT_ID/secrets/GCP_SA_EMAIL/versions/latest
+    env: "TF_VAR_deploy_sa_email"
+
+# Substitutions for environment values
+substitutions:
+  _REGION: "us-central1"
+  _TF_STATE_BUCKET: "tfstate-terraform-488518"
+  _TF_STATE_PREFIX: "network/dev"
+
+# Logging option
+options:
+  logging: CLOUD_LOGGING_ONLY
