@@ -1,5 +1,15 @@
 project_id      = "terraform-488518"
 region          = "us-central1"
+# ASNs for BGP
+vpc_a_asn           = 64514
+vpc_b_asn           = 64515
+# Link-local IPs for BGP session
+bgp_interface_cidr_a = "169.254.0.1/30"
+bgp_interface_cidr_b = "169.254.0.2/30"
+# Peer IPs for each side
+bgp_peer_ip_a       = "169.254.0.2"
+bgp_peer_ip_b       = "169.254.0.1"
+vpn_shared_secret = "super-secure-secret"
 
 vpc1_name = "vpc-app-dev"
 vpc2_name = "vpc-onprem-sim"
@@ -11,7 +21,6 @@ vpc1_subnets = {
 
 vpc2_subnets = {
   a = { name = "ops-a", cidr = "10.20.1.0/24", region = "us-central1" }
-  b = { name = "ops-b", cidr = "10.20.2.0/24", region = "us-central1" }
 }
 
 vm1_name        = "frontend-vm"

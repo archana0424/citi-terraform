@@ -40,3 +40,53 @@ module "vm_b" {
   sa_email       = var.deploy_sa_email
   startup_script = "apt-get update -y && apt-get install -y apache2"
 }
+/*  Classic VPN Setup (Static Routes)
+module "vpn_vpc_a" {
+  source            = "./modules/vpn"
+  vpn_gateway_name  = "vpc-a"
+  vpc_name          = module.vpc_a.vpc_name
+  vpc_self_link     = module.vpc_a.vpc_self_link
+  region            = var.region
+  peer_ip           = module.vpn_vpc_b.vpn_gateway_ip   # dynamically connected
+  shared_secret     = var.vpn_shared_secret
+  local_cidr        = var.vpc_a_cidr
+  remote_cidr       = var.vpc_b_cidr
+}
+
+module "vpn_vpc_b" {
+  source            = "./modules/vpn"
+  vpn_gateway_name  = "vpc-b"
+  vpc_name          = module.vpc_b.vpc_name
+  vpc_self_link     = module.vpc_b.vpc_self_link
+  region            = var.region
+  peer_ip           = module.vpn_vpc_a.vpn_gateway_ip   # dynamically connected
+  shared_secret     = var.vpn_shared_secret
+  local_cidr        = var.vpc_b_cidr
+  remote_cidr       = var.vpc_a_cidr
+}
+*/
+module "ha_vpn_a" {
+  source                   = "./modules/ha_vpn"
+  name                     = "vpc-a"
+  vpc_self_link            = module.vpc_a.vpc_self_link
+  region                   = var.region
+  peer_gateway_ip          = module.ha_vpn_b.gateway_ip
+  local_asn                = var.vpc_a_asn
+  peer_asn                 = var.vpc_b_asn
+  bgp_interface_cidr_local = var.bgp_interface_cidr_a
+  bgp_interface_peer_ip    = var.bgp_peer_ip_a
+  shared_secret            = var.vpn_shared_secret
+}
+
+module "ha_vpn_b" {
+  source                   = "./modules/ha_vpn"
+  name                     = "vpc-b"
+  vpc_self_link            = module.vpc_b.vpc_self_link
+  region                   = var.region
+  peer_gateway_ip          = module.ha_vpn_a.gateway_ip
+  local_asn                = var.vpc_b_asn
+  peer_asn                 = var.vpc_a_asn
+  bgp_interface_cidr_local = var.bgp_interface_cidr_b
+  bgp_interface_peer_ip    = var.bgp_peer_ip_b
+  shared_secret            = var.vpn_shared_secret
+}
