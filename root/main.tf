@@ -90,3 +90,8 @@ module "ha_vpn_b" {
   bgp_interface_peer_ip    = var.bgp_peer_ip_b
   shared_secret            = var.vpn_shared_secret
 }
+module "firewall" {
+  source       = "../../modules/firewall"
+  network_name = var.fw_network_name
+  rules        = var.fw_rules
+}

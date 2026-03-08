@@ -78,3 +78,19 @@ variable "bgp_peer_ip_b" {
   description = "Peer IP for VPC B router interface"
 }
 
+variable "fw_network_name" {
+  type        = string
+  description = "VPC network name where firewall rules will be applied"
+}
+
+variable "fw_rules" {
+  description = "Map of firewall rules for different protocols and ports"
+  type = map(object({
+    name                    = string
+    protocol                = string
+    ports                   = list(string)
+    source_ranges           = list(string)
+    target_tags             = optional(list(string))
+    target_service_accounts = optional(list(string))
+  }))
+}

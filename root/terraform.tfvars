@@ -30,3 +30,30 @@ vm_machine_type = "e2-micro"
 
 vm1_startup_script = "apt-get update -y && apt-get install -y iperf3"
 vm2_startup_script = "apt-get update -y && apt-get install -y nginx iperf3"
+
+fw_network_name = "vpc-app-dev"
+
+fw_rules = {
+  ssh = {
+    name          = "allow-ssh"
+    protocol      = "tcp"
+    ports         = ["22"]
+    source_ranges = ["35.235.240.0/20"]   # IAP proxy range
+    target_service_accounts = ["vm-a-sa@app-project.iam.gserviceaccount.com"]
+  }
+
+  web = {
+    name          = "allow-http-https"
+    protocol      = "tcp"
+    ports         = ["80", "443"]
+    source_ranges = ["0.0.0.0/0"]
+    target_tags   = ["web"]
+  }
+
+  icmp = {
+    name          = "allow-icmp"
+    protocol      = "icmp"
+    ports         = []
+    source_ranges = ["0.0.0.0/0"]
+  }
+}
