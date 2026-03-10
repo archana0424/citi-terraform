@@ -127,3 +127,50 @@ variable "health_check_port" {
   description = "Port used for health checks"
   default     = 80
 }
+
+# cloud_dns Variables
+
+variable "public_dns_zone_name" {
+  type        = string
+  description = "Name of the public DNS managed zone"
+}
+
+variable "public_dns_domain" {
+  type        = string
+  description = "Domain name for the public DNS zone"
+}
+
+variable "public_dns_records" {
+  description = "Map of public DNS records"
+  type = map(object({
+    name    = string
+    type    = string
+    ttl     = number
+    rrdatas = list(string)
+  }))
+}
+
+variable "private_dns_zone_name" {
+  type        = string
+  description = "Name of the private DNS managed zone"
+}
+
+variable "private_dns_domain" {
+  type        = string
+  description = "Domain name for the private DNS zone"
+}
+
+variable "private_dns_records" {
+  description = "Map of private DNS records"
+  type = map(object({
+    name    = string
+    type    = string
+    ttl     = number
+    rrdatas = list(string)
+  }))
+}
+
+variable "private_dns_networks" {
+  type        = list(string)
+  description = "List of VPC network self_links associated with private DNS zone"
+}

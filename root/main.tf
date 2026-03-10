@@ -122,3 +122,19 @@ module "internal_lb" {
   subnetwork        = module.vpc1.subnet_self_links["a"]
   health_check_port = 8080
 }
+module "public_dns" {
+  source          = "./modules/cloud_dns"
+  zone_name       = var.public_dns_zone_name
+  zone_domain     = var.public_dns_domain
+  zone_visibility = "public"
+  records         = var.public_dns_records
+}
+
+module "private_dns" {
+  source          = "./modules/cloud_dns"
+  zone_name       = var.private_dns_zone_name
+  zone_domain     = var.private_dns_domain
+  zone_visibility = "private"
+  records         = var.private_dns_records
+  private_networks = var.private_dns_networks
+}
