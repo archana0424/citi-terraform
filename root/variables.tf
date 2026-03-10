@@ -45,6 +45,7 @@ variable "vm2_name" {
   type    = string
   default = "vm-b"
 }
+# vpn Variables
 
 variable "vpc_a_asn" {
   type    = string
@@ -77,6 +78,7 @@ variable "bgp_peer_ip_b" {
   type    = string
   description = "Peer IP for VPC B router interface"
 }
+# firewall rules Variables
 
 variable "fw_network_name" {
   type        = string
@@ -93,4 +95,35 @@ variable "fw_rules" {
     target_tags             = optional(list(string))
     target_service_accounts = optional(list(string))
   }))
+}
+
+# Load Balancer Variables
+variable "external_lb_name" {
+  type        = string
+  description = "Name of the external HTTP(S) load balancer"
+  default     = "web-external-lb"
+}
+
+variable "internal_lb_name" {
+  type        = string
+  description = "Name of the internal TCP/UDP load balancer"
+  default     = "app-internal-lb"
+}
+
+variable "external_lb_port" {
+  type        = string
+  description = "Port for external load balancer"
+  default     = "80"
+}
+
+variable "internal_lb_port" {
+  type        = string
+  description = "Port for internal load balancer"
+  default     = "8080"
+}
+
+variable "health_check_port" {
+  type        = number
+  description = "Port used for health checks"
+  default     = 80
 }

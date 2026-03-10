@@ -95,3 +95,30 @@ module "firewall" {
   network_name = var.fw_network_name
   rules        = var.fw_rules
 }
+module "external_lb" {
+  source            = "./modules/load_balancer"
+  lb_name           = "web-external-lb"
+  lb_scheme         = "EXTERNAL"
+  lb_port_range     = "80"
+  backend_instances = [
+    module.vm_a.self_link,
+    module.vm_b.self_link
+  ]
+  network           = module.vpc1.network_self_link
+  subnetwork        = null
+  health_check_port = 80
+}
+
+module "internal_lb" {
+  source            = "./modules/load_balancer"
+  lb_name           = "app-internal-lb"
+  lb_scheme         = "INTERNAL"
+  lb_port_range     = "8080"
+  backend_instances = [
+    module.vm_a.self_link,
+    module.vm_b.self_link
+  ]
+  network           = module.vpc1.network_self_link
+  subnetwork        = module.vpc1.subnet_self_links["a"]
+  health_check_port = 8080
+}
