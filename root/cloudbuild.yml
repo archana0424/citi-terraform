@@ -1,4 +1,5 @@
 # Cloud Build pipeline for Terraform (init, validate, plan, apply)
+
 steps:
 # Step 1: Pre-check (GCP connection, auth, versions)
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
@@ -18,7 +19,6 @@ steps:
       echo "Impersonation target: ${TF_VAR_deploy_sa_email}"
       gcloud auth print-access-token --impersonate-service-account="${TF_VAR_deploy_sa_email}" >/dev/null && echo "Impersonation OK" || echo "Impersonation FAILED"
 
-steps:
 # Step 2: Terraform Init + Validate
 - name: hashicorp/terraform:1.6.6
   id: init-validate
@@ -31,12 +31,11 @@ steps:
         -backend-config="prefix=${_TF_STATE_PREFIX}"
       terraform fmt -check
       terraform validate
-
   env:
     - "TF_VAR_project_id=$PROJECT_ID"
     - "TF_VAR_region=${_REGION}"
-    - "TF_VAR_deploy_sa_email=${TF_VAR_deploy_sa_email}"
-    - "TF_VAR_shared_secret=${TF_VAR_shared_secret}"
+    - "TF_VAR_deploy_sa_email"
+    - "TF_VAR_shared_secret"
 
 # Step 3: Terraform Plan
 - name: hashicorp/terraform:1.6.6
@@ -46,14 +45,13 @@ steps:
     - -c
     - |
       terraform plan -out=tfplan
-
   env:
     - "TF_VAR_project_id=$PROJECT_ID"
     - "TF_VAR_region=${_REGION}"
-    - "TF_VAR_deploy_sa_email=${TF_VAR_deploy_sa_email}"
-    - "TF_VAR_shared_secret=${TF_VAR_shared_secret}"
+    - "TF_VAR_deploy_sa_email"
+    - "TF_VAR_shared_secret"
 
-# Step 4: Terraform Apply
+# Step 4: Terraform Apply (optional, uncomment when ready)
 #- name: hashicorp/terraform:1.6.6
 #  id: apply
 #  entrypoint: sh
@@ -61,12 +59,11 @@ steps:
 #    - -c
 #    - |
 #      terraform apply -auto-approve tfplan
-
 #  env:
 #    - "TF_VAR_project_id=$PROJECT_ID"
 #    - "TF_VAR_region=${_REGION}"
-#    - "TF_VAR_deploy_sa_email=${TF_VAR_deploy_sa_email}"
-#    - "TF_VAR_shared_secret=${TF_VAR_shared_secret}"
+#    - "TF_VAR_deploy_sa_email"
+#    - "TF_VAR_shared_secret"
 
 # Secrets injection from Secret Manager
 availableSecrets:
@@ -74,7 +71,7 @@ availableSecrets:
   - versionName: projects/$PROJECT_ID/secrets/GCP_SA_EMAIL/versions/latest
     env: "TF_VAR_deploy_sa_email"
   - versionName: projects/$PROJECT_ID/secrets/vpn-shared-secret/versions/latest
-    env: 'TF_VAR_shared_secret'
+    env: "TF_VAR_shared_secret"
 
 # Substitutions for environment values
 substitutions:
