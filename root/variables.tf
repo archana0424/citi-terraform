@@ -32,9 +32,6 @@ variable "vpc2_subnets" {
     region = string
   }))
 }
-variable "deploy_sa_email" {
-  type = string
-}
 
 variable "vm1_name" {
   type    = string

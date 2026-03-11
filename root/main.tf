@@ -1,19 +1,19 @@
 module "vpc1" {
-  source               = "../../modules/vpc"
+  source               = "../modules/vpc"
   name                 = var.vpc1_name
   delete_default_routes = true
   subnets              = var.vpc1_subnets
 }
 
 module "vpc2" {
-  source               = "../../modules/vpc"
+  source               = "../modules/vpc"
   name                 = var.vpc2_name
   delete_default_routes = true
   subnets              = var.vpc2_subnets
 }
 
 module "peering_vpc1_vpc2" {
-  source              = "./modules/vpc-peering"
+  source              = "../modules/vpc-peering"
   local_vpc_name      = module.vpc1.network_name
   peer_vpc_name       = module.vpc2.network_name
   local_vpc_self_link = module.vpc1.network_self_link
@@ -21,7 +21,7 @@ module "peering_vpc1_vpc2" {
 }
 
 module "vm_a" {
-  source         = "./modules/compute_vm"
+  source         = "../modules/compute_vm"
   name           = var.vm1_name
   zone           = "${var.region}-a"
   network        = module.vpc1.network_self_link
@@ -32,7 +32,7 @@ module "vm_a" {
 }
 
 module "vm_b" {
-  source         = "./modules/compute_vm"
+  source         = "../modules/compute_vm"
   name           = var.vm2_name
   zone           = "${var.region}-b"
   network        = module.vpc1.network_self_link
@@ -42,7 +42,7 @@ module "vm_b" {
 }
 /*  Classic VPN Setup (Static Routes)
 module "vpn_vpc_a" {
-  source            = "./modules/vpn"
+  source            = "../modules/vpn"
   vpn_gateway_name  = "vpc-a"
   vpc_name          = module.vpc_a.vpc_name
   vpc_self_link     = module.vpc_a.vpc_self_link
@@ -54,7 +54,7 @@ module "vpn_vpc_a" {
 }
 
 module "vpn_vpc_b" {
-  source            = "./modules/vpn"
+  source            = "../modules/vpn"
   vpn_gateway_name  = "vpc-b"
   vpc_name          = module.vpc_b.vpc_name
   vpc_self_link     = module.vpc_b.vpc_self_link
@@ -66,7 +66,7 @@ module "vpn_vpc_b" {
 }
 */
 module "ha_vpn_a" {
-  source                   = "./modules/ha_vpn"
+  source                   = "../modules/ha_vpn"
   name                     = "vpc-a"
   vpc_self_link            = module.vpc_a.vpc_self_link
   region                   = var.region
@@ -79,7 +79,7 @@ module "ha_vpn_a" {
 }
 
 module "ha_vpn_b" {
-  source                   = "./modules/ha_vpn"
+  source                   = "../modules/ha_vpn"
   name                     = "vpc-b"
   vpc_self_link            = module.vpc_b.vpc_self_link
   region                   = var.region
@@ -91,12 +91,12 @@ module "ha_vpn_b" {
   shared_secret            = var.vpn_shared_secret
 }
 module "firewall" {
-  source       = "../../modules/firewall"
+  source       = "../modules/firewall"
   network_name = var.fw_network_name
   rules        = var.fw_rules
 }
 module "external_lb" {
-  source            = "./modules/load_balancer"
+  source            = "../modules/load_balancer"
   lb_name           = "web-external-lb"
   lb_scheme         = "EXTERNAL"
   lb_port_range     = "80"
@@ -110,7 +110,7 @@ module "external_lb" {
 }
 
 module "internal_lb" {
-  source            = "./modules/load_balancer"
+  source            = "../modules/load_balancer"
   lb_name           = "app-internal-lb"
   lb_scheme         = "INTERNAL"
   lb_port_range     = "8080"
@@ -123,7 +123,7 @@ module "internal_lb" {
   health_check_port = 8080
 }
 module "public_dns" {
-  source          = "./modules/cloud_dns"
+  source          = "../modules/cloud_dns"
   zone_name       = var.public_dns_zone_name
   zone_domain     = var.public_dns_domain
   zone_visibility = "public"
@@ -131,7 +131,7 @@ module "public_dns" {
 }
 
 module "private_dns" {
-  source          = "./modules/cloud_dns"
+  source          = "../modules/cloud_dns"
   zone_name       = var.private_dns_zone_name
   zone_domain     = var.private_dns_domain
   zone_visibility = "private"
