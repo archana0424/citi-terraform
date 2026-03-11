@@ -62,8 +62,8 @@ steps:
 #  env:
 #    - "TF_VAR_project_id=$PROJECT_ID"
 #    - "TF_VAR_region=${_REGION}"
-#    - "TF_VAR_deploy_sa_email=${TF_VAR_deploy_sa_email}"
-#    - "TF_VAR_shared_secret=${TF_VAR_shared_secret}"
+#    - "TF_VAR_deploy_sa_email=$TF_VAR_deploy_sa_email"
+#    - "TF_VAR_shared_secret=$TF_VAR_shared_secret"
 
 # Secrets injection from Secret Manager
 availableSecrets:
@@ -73,7 +73,7 @@ availableSecrets:
   - versionName: projects/$PROJECT_ID/secrets/vpn-shared-secret/versions/latest
     env: "TF_VAR_shared_secret"
 
-# Substitutions for environment values
+# Substitutions for environment values (only custom keys starting with _)
 substitutions:
   _REGION: "us-central1"
   _TF_STATE_BUCKET: "tfstate-terraform-488518"
