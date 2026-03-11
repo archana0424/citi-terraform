@@ -13,7 +13,7 @@ module "vpc2" {
 }
 
 module "peering_vpc1_vpc2" {
-  source              = "../modules/vpc-peering"
+  source              = "../modules/peering"
   local_vpc_name      = module.vpc1.network_name
   peer_vpc_name       = module.vpc2.network_name
   local_vpc_self_link = module.vpc1.network_self_link
@@ -66,7 +66,7 @@ module "vpn_vpc_b" {
 }
 */
 module "ha_vpn_a" {
-  source                   = "../modules/ha_vpn"
+  source                   = "../modules/vpn"
   name                     = "vpc-a"
   vpc_self_link            = module.vpc_a.vpc_self_link
   region                   = var.region
@@ -79,7 +79,7 @@ module "ha_vpn_a" {
 }
 
 module "ha_vpn_b" {
-  source                   = "../modules/ha_vpn"
+  source                   = "../modules/vpn"
   name                     = "vpc-b"
   vpc_self_link            = module.vpc_b.vpc_self_link
   region                   = var.region
@@ -91,7 +91,7 @@ module "ha_vpn_b" {
   shared_secret            = var.vpn_shared_secret
 }
 module "firewall" {
-  source       = "../modules/firewall"
+  source       = "../modules/firewall_rule"
   network_name = var.fw_network_name
   rules        = var.fw_rules
 }
