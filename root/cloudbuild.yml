@@ -18,7 +18,9 @@ steps:
       gcloud --version
       echo "Impersonation target: $TF_VAR_deploy_sa_email"
       gcloud auth print-access-token --impersonate-service-account="$TF_VAR_deploy_sa_email" >/dev/null && echo "Impersonation OK" || echo "Impersonation FAILED"
-
+  env:
+    - "TF_VAR_deploy_sa_email=$TF_VAR_deploy_sa_email"
+    
 # Step 2: Terraform Init + Validate
 - name: hashicorp/terraform:1.6.6
   id: init-validate
