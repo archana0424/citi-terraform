@@ -42,6 +42,13 @@ variable "vm2_name" {
   type    = string
   default = "vm-b"
 }
+variable "machine_type" {
+  type = string
+}
+
+variable "image" {
+  type = string
+}
 # vpn Variables
 
 variable "vpc_a_asn" {
