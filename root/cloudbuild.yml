@@ -20,7 +20,7 @@ steps:
       gcloud auth print-access-token --impersonate-service-account="$TF_VAR_deploy_sa_email" >/dev/null && echo "Impersonation OK" || echo "Impersonation FAILED"
   env:
     - "TF_VAR_deploy_sa_email=$TF_VAR_deploy_sa_email"
-    
+
 # Step 2: Terraform Init + Validate
 - name: hashicorp/terraform:1.6.6
   id: init-validate
@@ -35,7 +35,7 @@ steps:
       terraform validate
   env:
     - "TF_VAR_project_id=$PROJECT_ID"
-    - "TF_VAR_region=${_REGION}"
+    - "TF_VAR_region=$_REGION"
     - "TF_VAR_deploy_sa_email=$TF_VAR_deploy_sa_email"
     - "TF_VAR_shared_secret=$TF_VAR_shared_secret"
 
@@ -49,7 +49,7 @@ steps:
       terraform plan -out=tfplan
   env:
     - "TF_VAR_project_id=$PROJECT_ID"
-    - "TF_VAR_region=${_REGION}"
+    - "TF_VAR_region=$_REGION"
     - "TF_VAR_deploy_sa_email=$TF_VAR_deploy_sa_email"
     - "TF_VAR_shared_secret=$TF_VAR_shared_secret"
 
@@ -63,7 +63,7 @@ steps:
 #      terraform apply -auto-approve tfplan
 #  env:
 #    - "TF_VAR_project_id=$PROJECT_ID"
-#    - "TF_VAR_region=${_REGION}"
+#    - "TF_VAR_region=$_REGION"
 #    - "TF_VAR_deploy_sa_email=$TF_VAR_deploy_sa_email"
 #    - "TF_VAR_shared_secret=$TF_VAR_shared_secret"
 
