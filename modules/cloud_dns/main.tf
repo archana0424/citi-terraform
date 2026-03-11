@@ -5,10 +5,11 @@ resource "google_dns_managed_zone" "dns_zone" {
 
   visibility  = var.zone_visibility # "public" or "private"
 
-  dynamic "private_visibility_config" {
-    for_each = var.zone_visibility == "private" ? [1] : []
+  private_visibility_config {
+  dynamic "networks" {
+    for_each = var.private_networks
     content {
-      networks = [for net in var.private_networks : { network_url = net }]
+      network_url = networks.value
     }
   }
 }
