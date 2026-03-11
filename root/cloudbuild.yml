@@ -40,6 +40,7 @@ steps:
   args:
     - -c
     - |
+      cd root
       terraform init \
         -backend-config="bucket=$_TF_STATE_BUCKET" \
         -backend-config="prefix=$_TF_STATE_PREFIX"
@@ -61,6 +62,7 @@ steps:
   args:
     - -c
     - |
+      cd root
       terraform plan -out=tfplan
 
 
