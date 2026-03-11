@@ -52,18 +52,18 @@ steps:
     - "TF_VAR_deploy_sa_email=${TF_VAR_deploy_sa_email}"
 
 # Step 4: Terraform Apply
-- name: hashicorp/terraform:1.6.6
-  id: apply
-  entrypoint: sh
-  args:
-    - -c
-    - |
-      terraform apply -auto-approve tfplan
+#- name: hashicorp/terraform:1.6.6
+#  id: apply
+#  entrypoint: sh
+#  args:
+#    - -c
+#    - |
+#      terraform apply -auto-approve tfplan
 
-  env:
-    - "TF_VAR_project_id=$PROJECT_ID"
-    - "TF_VAR_region=${_REGION}"
-    - "TF_VAR_deploy_sa_email=${TF_VAR_deploy_sa_email}"
+#  env:
+#    - "TF_VAR_project_id=$PROJECT_ID"
+#    - "TF_VAR_region=${_REGION}"
+#    - "TF_VAR_deploy_sa_email=${TF_VAR_deploy_sa_email}"
 
 # Secrets injection from Secret Manager
 availableSecrets:

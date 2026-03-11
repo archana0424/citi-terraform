@@ -84,7 +84,10 @@ variable "fw_network_name" {
   type        = string
   description = "VPC network name where firewall rules will be applied"
 }
-
+variable "deploy_sa_email" {
+  type        = string
+  description = "Service account email injected from Cloud Build / Secret Manager"
+}
 variable "fw_rules" {
   description = "Map of firewall rules for different protocols and ports"
   type = map(object({

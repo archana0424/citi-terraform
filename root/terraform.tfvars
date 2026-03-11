@@ -44,7 +44,7 @@ fw_rules = {
     protocol      = "tcp"
     ports         = ["22"]
     source_ranges = ["35.235.240.0/20"]   # IAP proxy range
-    target_service_accounts = ["vm-a-sa@app-project.iam.gserviceaccount.com"]
+    target_service_accounts = [var.deploy_sa_email]
   }
 
   web = {
