@@ -72,7 +72,7 @@ module "vpn_vpc_b" {
 module "ha_vpn_a" {
   source                   = "../modules/vpn"
   name                     = "vpn-a"
-  vpc_self_link            = module.vpc1.vpc_self_link
+  vpc_self_link            = module.vpc1.network_self_link
   region                   = var.region
   peer_gateway_ip          = module.ha_vpn_b.gateway_ip
   local_asn                = var.vpc_a_asn
@@ -85,7 +85,7 @@ module "ha_vpn_a" {
 module "ha_vpn_b" {
   source                   = "../modules/vpn"
   name                     = "vpn-b"
-  vpc_self_link            = module.vpc2.vpc_self_link
+  vpc_self_link            = module.vpc2.network_self_link
   region                   = var.region
   peer_gateway_ip          = module.ha_vpn_a.gateway_ip
   local_asn                = var.vpc_b_asn
