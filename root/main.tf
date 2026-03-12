@@ -51,8 +51,8 @@ module "vm_a" {
 
   tags = ["web"]
 
-  machine_type = var.machine_type
-  image        = var.image
+  machine_type = var.vm_machine_type
+  image        = var.vm_image
   sa_email     = var.deploy_sa_email
 
   startup_script = "apt-get update -y && apt-get install -y nginx"
@@ -67,8 +67,8 @@ module "vm_b" {
   network = module.vpc1.network_self_link
   subnet  = module.vpc1.subnet_self_links["b"]
 
-  machine_type = var.machine_type
-  image        = var.image
+  machine_type = var.vm_machine_type
+  image        = var.vm_image
   sa_email     = var.deploy_sa_email
 
   startup_script = "apt-get update -y && apt-get install -y apache2"
