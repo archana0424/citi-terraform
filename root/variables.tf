@@ -183,8 +183,3 @@ variable "private_dns_records" {
     rrdatas = list(string)
   }))
 }
-
-variable "private_dns_networks" {
-  type        = list(string)
-  description = "List of VPC network self_links associated with private DNS zone"
-}
