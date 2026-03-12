@@ -77,7 +77,7 @@ module "ha_vpn_a" {
   region        = var.region
   vpc_self_link = module.vpc1.network_self_link
 
-  peer_vpc_self_link = module.vpc2.network_self_link
+  peer_gateway_ip = module.ha_vpn_b.gateway_ip
 
   local_asn = var.vpc_a_asn
   peer_asn  = var.vpc_b_asn
@@ -95,7 +95,7 @@ module "ha_vpn_b" {
   region        = var.region
   vpc_self_link = module.vpc2.network_self_link
 
-  peer_vpc_self_link = module.vpc1.network_self_link
+  peer_gateway_ip = module.ha_vpn_a.gateway_ip
 
   local_asn = var.vpc_b_asn
   peer_asn  = var.vpc_a_asn
