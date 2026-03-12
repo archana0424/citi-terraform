@@ -42,21 +42,28 @@ variable "vm2_name" {
   type    = string
   default = "vm-b"
 }
-variable "machine_type" {
+variable "vm_machine_type" {
   type = string
 }
 
-variable "image" {
+variable "vm_image" {
+  type = string
+}
+variable "vm1_startup_script" {
+  type = string
+}
+
+variable "vm2_startup_script" {
   type = string
 }
 # vpn Variables
 
 variable "vpc_a_asn" {
-  type    = string
+  type    = number
   description = "BGP ASN for VPC A Cloud Router"
 }
 variable "vpc_b_asn" {
-  type    = string
+  type    = number
   description = "BGP ASN for VPC B Cloud Router"
 }
 

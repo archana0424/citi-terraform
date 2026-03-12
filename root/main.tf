@@ -1,3 +1,11 @@
+locals {
+  fw_rules = {
+    for key, rule in var.fw_rules :
+    key => merge(rule, key == "ssh" ? {
+      target_service_accounts = [var.deploy_sa_email]
+    } : {})
+  }
+}
 ################################
 # VPC NETWORKS
 ################################
@@ -114,9 +122,8 @@ module "firewall" {
   source = "../modules/firewall_rule"
 
   network_name = module.vpc1.network_name
-  rules        = var.fw_rules
+  rules        = local.fw_rules
 }
-
 ################################
 # EXTERNAL LOAD BALANCER
 ################################

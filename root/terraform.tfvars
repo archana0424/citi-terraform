@@ -44,7 +44,6 @@ fw_rules = {
     protocol      = "tcp"
     ports         = ["22"]
     source_ranges = ["35.235.240.0/20"]   # IAP proxy range
-    target_service_accounts = [var.deploy_sa_email]
   }
 
   web = {
@@ -94,7 +93,3 @@ private_dns_records = {
     rrdatas = ["10.0.2.5"] # internal IP of vm_b
   }
 }
-
-private_dns_networks = [
-  module.vpc1.network_self_link
-]
