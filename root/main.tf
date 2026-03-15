@@ -207,3 +207,13 @@ module "cloud_nat_app_dev" {
   vpc_name    = var.vpc1_name
   subnet_name = var.vpc1_subnets["a"].name
 }
+
+module "routes_app_dev" {
+  source                 = "../modules/routes"
+  router_name            = "app-dev-custom-route"
+  network                = var.vpc1_name
+  dest_range             = "0.0.0.0/0"
+  next_hop_instance      = module.vm_a.self_link 
+  next_hop_instance_zone = "us-central1-a"
+  priority               = 900
+}
