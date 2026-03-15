@@ -199,3 +199,11 @@ module "private_dns" {
     module.vpc1.network_self_link
   ]
 }
+
+module "cloud_nat_app_dev" {
+  source      = "../modules/cloud_nat"
+  project_id  = var.project_id
+  region      = var.region
+  vpc_name    = var.vpc1_name
+  subnet_name = var.vpc1_subnets["a"].name
+}
