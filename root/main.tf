@@ -219,7 +219,7 @@ module "routes_app_dev" {
 }
 
 module "disks" {
-  source    = "./modules/disks"
+  source    = "../modules/disks"
   disk_name = var.disk_name
   disk_size = var.disk_size
   zone      = var.zone
@@ -227,7 +227,7 @@ module "disks" {
 }
 
 module "snapshots" {
-  source        = "./modules/snapshots"
+  source        = "../modules/snapshots"
   snapshot_name = var.snapshot_name
   source_disk   = module.disks.disk_id
   zone          = var.zone
