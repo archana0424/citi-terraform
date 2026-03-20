@@ -217,3 +217,22 @@ module "routes_app_dev" {
   next_hop_instance_zone = "us-central1-a"
   priority               = 900
 }
+
+module "disks" {
+  source    = "./modules/disks"
+  disk_name = var.disk_name
+  disk_size = var.disk_size
+  zone      = var.zone
+  vm_name   = module.compute.vm_name
+}
+
+module "snapshots" {
+  source        = "./modules/snapshots"
+  snapshot_name = var.snapshot_name
+  source_disk   = module.disks.disk_id
+  zone          = var.zone
+  new_vm_name   = var.new_vm_name
+  machine_type  = var.machine_type
+  network       = var.network
+  subnet        = var.subnet
+}

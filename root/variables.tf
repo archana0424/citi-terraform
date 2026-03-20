@@ -183,3 +183,27 @@ variable "private_dns_records" {
     rrdatas = list(string)
   }))
 }
+variable "disk_name" { 
+  type = string
+}
+variable "disk_size" { 
+  type = number 
+}
+variable "snapshot_name" { 
+  type = string 
+}
+variable "new_vm_name" { 
+  type = string 
+}
+variable "machine_type" { 
+  type = string
+}
+variable "zone" { 
+  type = string 
+}
+variable "network" { 
+  type = string 
+}
+variable "subnet" { 
+  type = string 
+}

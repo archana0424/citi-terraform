@@ -93,3 +93,11 @@ private_dns_records = {
     rrdatas = ["10.0.2.5"] # internal IP of vm_b
   }
 }
+disk_name     = "extra-disk"
+disk_size     = 50
+snapshot_name = "boot-snapshot"
+new_vm_name   = "cloned-vm"
+machine_type  = "e2-medium"
+zone          = "us-central1-a"
+network       = "default"
+subnet        = "default"
