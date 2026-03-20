@@ -223,16 +223,18 @@ module "disks" {
   disk_name = var.disk_name
   disk_size = var.disk_size
   zone      = var.zone
-  vm_name   = module.compute.vm_name
+  vm_name   = module.vm_a.vm_name
 }
 
-module "snapshots" {
-  source        = "../modules/snapshots"
-  snapshot_name = var.snapshot_name
-  source_disk   = module.disks.disk_id
-  zone          = var.zone
-  new_vm_name   = var.new_vm_name
-  machine_type  = var.machine_type
-  network       = var.network
-  subnet        = var.subnet
+module "snapshot_vm_a" {
+  source = "../modules/snapshots"
+
+  snapshot_name = "vm-a-snapshot"
+  source_disk = module.vm_a.boot_disk_self_link
+  new_vm_name  = "vm-a-restored"
+  machine_type = var.vm_machine_type
+  zone         = "${var.region}-a"
+  network = var.network
+  subnet  = var.subnet_a
+  sa_email = var.deploy_sa_email
 }

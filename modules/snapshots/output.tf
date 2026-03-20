@@ -1,7 +1,7 @@
-output "snapshot_id" {
-  value = google_compute_snapshot.boot_snapshot.id
+output "snapshot_name" {
+  value = google_compute_snapshot.boot_snapshot.name
 }
 
-output "new_vm_ip" {
-  value = google_compute_instance.vm_from_snapshot.network_interface[0].access_config[0].nat_ip
+output "restored_vm_name" {
+  value = google_compute_instance.vm_from_snapshot.name
 }
