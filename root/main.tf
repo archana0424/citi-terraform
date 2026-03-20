@@ -238,3 +238,46 @@ module "snapshot_vm_a" {
   subnet  = var.subnet
   sa_email = var.deploy_sa_email
 }
+module "template" {
+  source = "../modules/instance_template"
+
+  name_prefix = "web-template"
+  machine_type = "e2-medium"
+  image = "debian-cloud/debian-11"
+  network = module.vpc1.network_self_link
+  subnet  = module.vpc1.subnet_self_links["a"]
+  sa_email = var.deploy_sa_email
+
+  startup_script = <<EOF
+#!/bin/bash
+apt-get update -y
+apt-get install -y nginx
+echo "Hello from $(hostname)" > /var/www/html/index.html
+systemctl restart nginx
+EOF
+
+  tags = ["web"]
+}
+
+module "mig" {
+  source = "../modules/mig"
+
+  mig_name = "web-mig"
+  base_instance_name = "web"
+
+  zone = var.zone
+
+  instance_template = module.template.template_self_link
+
+  target_size = 2
+  min_replicas = 2
+  max_replicas = 5
+}
+
+module "http_lb" {
+  source = "../modules/http_lb"
+
+  name = "web-lb"
+
+  instance_group = module.mig.instance_group
+}
