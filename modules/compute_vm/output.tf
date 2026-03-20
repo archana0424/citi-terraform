@@ -7,3 +7,6 @@ output "vm_internal_ip" {
 output "self_link" {
   value = google_compute_instance.vm.self_link
 }
+output "boot_disk_self_link" {
+  value = google_compute_instance.vm.boot_disk[0].source
+}
