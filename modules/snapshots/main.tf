@@ -4,9 +4,9 @@ resource "google_compute_snapshot" "boot_snapshot" {
 }
 
 resource "google_compute_disk" "disk_from_snapshot" {
-  name             = "${var.new_vm_name}-disk"
-  zone             = var.zone
-  source_snapshot  = google_compute_snapshot.boot_snapshot.self_link
+  name     = "${var.new_vm_name}-disk"
+  zone     = var.zone
+  snapshot = google_compute_snapshot.boot_snapshot.self_link
 }
 
 resource "google_compute_instance" "vm_from_snapshot" {
