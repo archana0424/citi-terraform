@@ -235,6 +235,6 @@ module "snapshot_vm_a" {
   machine_type = var.vm_machine_type
   zone         = "${var.region}-a"
   network = var.network
-  subnet  = var.subnet_a
+  subnet  = var.subnet
   sa_email = var.deploy_sa_email
 }
