@@ -7,4 +7,5 @@ resource "google_compute_disk" "extra_disk" {
 resource "google_compute_attached_disk" "attach_disk" {
   disk     = google_compute_disk.extra_disk.id
   instance = var.vm_name
+  zone = var.zone
 }
