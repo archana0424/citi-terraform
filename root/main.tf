@@ -282,8 +282,8 @@ module "http_lb" {
   instance_group = module.mig.instance_group
 }
 module "gke_cluster" {
-  source = "../modules/gke"
-  
+  source = "../modules/GKE_cluster"
+
   cluster_name = var.gke_cluster_name
   region       = var.gke_region
   network = module.vpc1.network_self_link
