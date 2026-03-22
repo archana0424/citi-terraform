@@ -282,12 +282,12 @@ module "http_lb" {
   instance_group = module.mig.instance_group
 }
 module "gke_cluster" {
-  source = "../modules/GKE_cluster"
-
-  cluster_name   = var.gke_cluster_name
-  region         = var.gke_region
-  network        = module.vpc1.network_self_link
-  subnetwork     = module.vpc1.subnet_self_links["a"]
+  source = "../modules/gke"
+  
+  cluster_name = var.gke_cluster_name
+  region       = var.gke_region
+  network = module.vpc1.network_self_link
+  subnet  = module.vpc1.subnet_self_links["a"]
   node_pool_name = var.gke_node_pool
   node_count     = var.gke_node_count
   machine_type   = var.gke_machine_type

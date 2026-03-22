@@ -2,6 +2,8 @@ variable "cluster_name" {}
 variable "region" {}
 variable "network" {}
 variable "subnet" {}
+variable "node_pool_name" {}
 variable "node_count" {}
 variable "machine_type" {}
+variable "hello_image" {}
 variable "deploy_sa_email" {}
