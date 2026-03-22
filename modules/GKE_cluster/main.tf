@@ -22,5 +22,4 @@ resource "google_container_node_pool" "nodes" {
       "https://www.googleapis.com/auth/cloud-platform"
     ]
   }
-  initial_node_count = var.node_count
 }
