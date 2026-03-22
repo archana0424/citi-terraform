@@ -296,6 +296,6 @@ module "gke_cluster" {
 }
 
 module "k8s_app" {
-  source = "../modules/K8s_app"
+  source = "../modules/K8_app"
   cluster_endpoint = module.gke_cluster.endpoint
 }
