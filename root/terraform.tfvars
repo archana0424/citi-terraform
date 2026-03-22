@@ -101,3 +101,10 @@ machine_type  = "e2-medium"
 zone          = "us-central1-a"
 network       = "default"
 subnet        = "default"
+#gke cluser 
+gke_cluster_name = "dev-gke-cluster"
+gke_region       = "us-central1"
+gke_node_count   = 2
+gke_machine_type = "e2-medium"
+gke_node_pool    = "primary-pool"
+gke_hello_image  = "gcr.io/google-samples/hello-app:1.0"

@@ -281,3 +281,21 @@ module "http_lb" {
 
   instance_group = module.mig.instance_group
 }
+module "gke_cluster" {
+  source = "../modules/gke"
+
+  cluster_name   = var.gke_cluster_name
+  region         = var.gke_region
+  network        = module.vpc1.network_self_link
+  subnetwork     = module.vpc1.subnet_self_links["a"]
+  node_pool_name = var.gke_node_pool
+  node_count     = var.gke_node_count
+  machine_type   = var.gke_machine_type
+  hello_image    = var.gke_hello_image
+  deploy_sa_email = var.deploy_sa_email
+}
+
+module "k8s_app" {
+  source = "../modules/k8s_app"
+  cluster_endpoint = module.gke_cluster.endpoint
+}

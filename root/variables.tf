@@ -207,3 +207,9 @@ variable "network" {
 variable "subnet" { 
   type = string 
 }
+variable "gke_cluster_name" {}
+variable "gke_region" {}
+variable "gke_node_count" {}
+variable "gke_machine_type" {}
+variable "gke_node_pool" {}
+variable "gke_hello_image" {}
