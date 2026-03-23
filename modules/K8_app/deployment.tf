@@ -1,4 +1,4 @@
-resource resource "kubernetes_deployment_v1" "hello_app" {
+resource "kubernetes_deployment_v1" "hello_app" {
 
   metadata {
     name = var.app_name
