@@ -119,3 +119,5 @@ app_image = "nginx"
 app_replicas = 2
 container_port = 80
 service_port   = 80
+pv_size = "10Gi"
+gce_disk_name = "gke-app-disk"

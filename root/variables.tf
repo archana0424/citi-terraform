@@ -223,3 +223,5 @@ variable "app_image" {}
 variable "app_replicas" {}
 variable "container_port" {}
 variable "service_port" {}
+variable "pv_size" {}
+variable "gce_disk_name" {}
