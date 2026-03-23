@@ -1,4 +1,4 @@
-resource "kubernetes_service" "clusterip" {
+resource "kubernetes_service_v1" "clusterip" {
 
   metadata {
     name = "${var.app_name}-clusterip"
