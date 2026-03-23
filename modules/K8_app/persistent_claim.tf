@@ -1,4 +1,4 @@
-resource "kubernetes_persistent_volume_claim" "gke_pvc" {
+resource "kubernetes_persistent_volume_claim_v1" "gke_pvc" {
 
   metadata {
     name = "${var.app_name}-pvc"
@@ -14,6 +14,6 @@ resource "kubernetes_persistent_volume_claim" "gke_pvc" {
       }
     }
 
-    volume_name = kubernetes_persistent_volume.gke_pv.metadata[0].name
+    volume_name = kubernetes_persistent_volume_v1.gke_pv.metadata[0].name
   }
 }

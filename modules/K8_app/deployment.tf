@@ -1,4 +1,4 @@
-resource "kubernetes_deployment" "hello_app" {
+resource resource "kubernetes_deployment_v1" "hello_app" {
 
   metadata {
     name = var.app_name
@@ -35,6 +35,21 @@ resource "kubernetes_deployment" "hello_app" {
 
           port {
             container_port = var.container_port
+          }
+          # Mount volume inside container
+          volume_mount {
+            name       = "app-storage"
+            mount_path = "/data"
+          }
+        }
+
+        # Attach PVC to pod
+        volume {
+
+          name = "app-storage"
+
+          persistent_volume_claim {
+            claim_name = kubernetes_persistent_volume_claim_v1.gke_pvc.metadata[0].name
           }
         }
       }
