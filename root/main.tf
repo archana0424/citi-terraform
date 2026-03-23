@@ -282,7 +282,7 @@ module "http_lb" {
   instance_group = module.mig.instance_group
 }
 module "gke_cluster" {
-  source = "../modules/gke_cluster"
+  source = "../modules/GKE_cluster"
 
   cluster_name = var.gke_cluster_name
   region       = var.gke_region
@@ -299,7 +299,7 @@ module "gke_cluster" {
 
 module "k8_app" {
 
-  source = "../modules/k8_app"
+  source = "../modules/K8_app"
 
   app_name       = var.app_name
   app_label      = var.app_label
