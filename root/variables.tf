@@ -210,7 +210,6 @@ variable "subnet" {
 
 variable "gke_cluster_name" {}
 variable "gke_region" {}
-variable "sa_email" {}
 variable "primary_machine_type" {}
 variable "primary_min_nodes" {}
 variable "primary_max_nodes" {}
