@@ -27,3 +27,11 @@ variable "service_port" {
   description = "Service port"
   type        = number
 }
+
+variable "pv_size" {
+  type = string
+}
+
+variable "gce_disk_name" {
+  type = string
+}

@@ -307,4 +307,12 @@ module "k8_app" {
   replicas       = var.app_replicas
   container_port = var.container_port
   service_port   = var.service_port
+  pv_size        = var.pv_size
+  gce_disk_name  = var.gce_disk_name
+}
+
+module "monitoring" {
+
+  source = "../modules/monitoring"
+  project_id = var.project_id
 }
