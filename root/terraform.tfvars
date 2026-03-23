@@ -104,7 +104,18 @@ subnet        = "default"
 #gke cluser 
 gke_cluster_name = "dev-gke-cluster"
 gke_region       = "us-central1"
-gke_node_count   = 2
-gke_machine_type = "e2-medium"
-gke_node_pool    = "primary-pool"
-gke_hello_image  = "gcr.io/google-samples/hello-app:1.0"
+
+primary_machine_type = "e2-medium"
+primary_min_nodes    = 1
+primary_max_nodes    = 3
+
+secondary_machine_type = "e2-standard-2"
+secondary_min_nodes    = 1
+secondary_max_nodes    = 2
+
+app_name = "hello-app"
+app_label = "hello"
+app_image = "nginx"
+app_replicas = 2
+container_port = 80
+service_port   = 80

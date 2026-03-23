@@ -207,9 +207,20 @@ variable "network" {
 variable "subnet" { 
   type = string 
 }
+
 variable "gke_cluster_name" {}
 variable "gke_region" {}
-variable "gke_node_count" {}
-variable "gke_machine_type" {}
-variable "gke_node_pool" {}
-variable "gke_hello_image" {}
+variable "sa_email" {}
+variable "primary_machine_type" {}
+variable "primary_min_nodes" {}
+variable "primary_max_nodes" {}
+variable "secondary_machine_type" {}
+variable "secondary_min_nodes" {}
+variable "secondary_max_nodes" {}
+
+variable "app_name" {}
+variable "app_label" {}
+variable "app_image" {}
+variable "app_replicas" {}
+variable "container_port" {}
+variable "service_port" {}

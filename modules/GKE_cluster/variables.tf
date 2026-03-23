@@ -2,8 +2,10 @@ variable "cluster_name" {}
 variable "region" {}
 variable "network" {}
 variable "subnet" {}
-variable "node_pool_name" {}
-variable "node_count" {}
+variable "sa_email" {}
 variable "machine_type" {}
-variable "hello_image" {}
-variable "deploy_sa_email" {}
+variable "min_nodes" {}
+variable "max_nodes" {}
+variable "secondary_machine_type" {}
+variable "secondary_min_nodes" {}
+variable "secondary_max_nodes" {}
