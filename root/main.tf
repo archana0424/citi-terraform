@@ -288,7 +288,7 @@ module "gke_cluster" {
   region       = var.gke_region
   network = module.vpc1.network_self_link
   subnet  = module.vpc1.subnet_self_links["a"]
-  sa_email = var.sa_email
+  sa_email = var.deploy_sa_email
   machine_type = var.primary_machine_type
   min_nodes    = var.primary_min_nodes
   max_nodes    = var.primary_max_nodes
